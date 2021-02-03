@@ -1,0 +1,8 @@
+#!/bin/bash
+
+GIT_TOOLS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+#echo "$GIT_TOOLS_DIR"
+GIT_REPO_DIR="$(git rev-parse --show-toplevel)"
+#echo "$GIT_REPO_DIR"
+
+cp -f "${GIT_TOOLS_DIR}/git-hooks"/* "${GIT_REPO_DIR}/.git/hooks/"

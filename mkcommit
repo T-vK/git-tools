@@ -1,0 +1,101 @@
+#!/bin/bash
+
+TICKET_TYPE=""
+TICKET_ID=""
+COMMIT_DESCRIPTION=""
+
+#############################################################
+
+HEIGHT=20
+WIDTH=120
+CHOICE_HEIGHT=9
+BACKTITLE="Commit Helper"
+TITLE="Commit Helper"
+
+#############################################################
+
+MENU="Choose the ticket type:"
+
+OPTIONS=(1 "fix: A bug fix"
+         2 "feat: A new feature"
+         3 "refactor: A code change that neither fixes a bug nor adds a feature"
+         4 "test: Adding missing tests or correcting existing tests"
+         5 "build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
+         6 "docs: Documentation only changes"
+         7 "ci: Changes to our CI configuration files and scripts (example scopes: Circle, BrowserStack, SauceLabs)"
+         8 "style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+         9 "perf: A code change that improves performance")
+
+CHOICE=$(dialog --clear \
+                --backtitle "$BACKTITLE" \
+                --title "$TITLE" \
+                --menu "$MENU" \
+                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                "${OPTIONS[@]}" \
+                2>&1 >/dev/tty)
+
+clear
+case $CHOICE in
+        1)
+            TICKET_TYPE="fix"
+            ;;
+        2)
+            TICKET_TYPE="feat"
+            ;;
+        3)
+            TICKET_TYPE="refactor"
+            ;;
+        4)
+            TICKET_TYPE="test"
+            ;;
+        5)
+            TICKET_TYPE="build"
+            ;;
+        6)
+            TICKET_TYPE="docs"
+            ;;
+        7)
+            TICKET_TYPE="ci"
+            ;;
+        8)
+            TICKET_TYPE="style"
+            ;;
+        9)
+            TICKET_TYPE="perf"
+            ;;
+        *)
+            exit 1
+            ;;
+esac
+
+###################################################################
+
+echo -n "Enter the Jira Ticket ID: CCS-"
+read -e TICKET_ID
+TICKET_ID="CCS-${TICKET_ID}"
+
+if ! [[ "${TICKET_ID}" =~ ^CCS-[0-9]+$ ]]; then
+    echo "ERROR: Invalid Ticket ID. Ticket IDs must match with this regex format /^CCS-\d+$/"
+    exit 1
+fi
+
+###################################################################
+
+echo -n "Enter a commit description: "
+read -e COMMIT_DESCRIPTION
+
+###################################################################
+
+COMMIT_MESSAGE="${TICKET_TYPE}(${TICKET_ID}): ${COMMIT_DESCRIPTION}"
+
+read -e -p "Your commit message is '${COMMIT_MESSAGE}', would you like to make the commit now? (Y/n)" -n 1 -r
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+    git commit -m "${COMMIT_MESSAGE}" || echo "ERROR: Failed make commit" && exit 1
+else
+    exit 1
+fi
+
+read -e -p "Would you like to push now? (y/N)" -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    git push || echo "ERROR: Failed to push" && exit 1
+fi
