@@ -1,8 +1,11 @@
+#!/bin/bash
 MSG_FILE=$1
 FILE_CONTENT="$(cat $MSG_FILE)"
 
-ERROR_MSG="Commit message format must match regex \"${REGEX}\""
+
 REGEX="^(build|ci|docs|feat|fix|perf|refactor|style|test)\(CCS-[0-9]+\): .*"
+ERROR_MSG="Commit message format must match regex \"${REGEX}\""
+
 if [[ $FILE_CONTENT =~ $REGEX ]]; then
     echo "Nice commit!"
 else
