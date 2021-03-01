@@ -54,8 +54,8 @@ esac
 if [[ "${BRANCH_SUFFIX}" == "main" ]] || [[ "${BRANCH_SUFFIX}" == "hotfix" ]]; then
     read -e -p "Would you like to checkout and pull the latest develop branch first? (Y/n)" -n 1 -r
     if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-        git checkout develop || echo "ERROR: Failed to checkout develop" && exit 1
-        git pull || echo "ERROR: Failed to pull develop" && exit 1
+        git checkout develop || bash -c 'echo "ERROR: Failed to checkout develop" && exit 1'
+        git pull || bash -c 'echo "ERROR: Failed to pull develop" && exit 1'
     fi
 fi
 
@@ -142,14 +142,14 @@ BRANCH_NAME="${TICKET_TYPE}/${TICKET_ID}/${BRANCH_DESCRIPTION}/${BRANCH_SUFFIX}"
 
 read -e -p "Your branch name is '${BRANCH_NAME}', would you like to create it now? (Y/n)" -n 1 -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-    git branch "${BRANCH_NAME}" || echo "ERROR: Failed to create branch" && exit 1
+    git branch "${BRANCH_NAME}" || bash -c 'echo "ERROR: Failed to create branch" && exit 1'
 else
     exit 1
 fi
 
 read -e -p "Would you like to check the branch out now? (Y/n)" -n 1 -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-    git checkout "${BRANCH_NAME}" || echo "ERROR: Failed to checkout new branch" && exit 1
+    git checkout "${BRANCH_NAME}" || bash -c 'echo "ERROR: Failed to checkout new branch" && exit 1'
 else
     exit 1
 fi

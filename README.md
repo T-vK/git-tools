@@ -1,14 +1,10 @@
 ## How to install mkbranch, mkcommit and install-git-hooks
 
-```Bash
+``` Bash
 git clone https://github.com/T-vK/git-tools.git
 cd git-tools
-echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
+./install.sh
 ```
-
-## Requirements
-
-Dialog (i.e. install with apt-get install dialog)
 
 ## mkbranch
 
@@ -20,7 +16,7 @@ Guides you through the creation of creating a commit with a commit message using
 
 ## install-git-hooks
 
-Installs a commit hook in the repository you run it. This hook prevents you from accidentally making commits with messages that don't follow the convention.  
-(The hook can't be pushed and only works on your machine where you installed it.)
+Installs a commit hook in the repository you run it. This hook prevents you from accidentally making commits with messages that don't follow the convention.
+(The hook itself can't be committed or pushed and only works on the machine you installed it on.)
 
-To uninstall it again, delete the .git/hooks/commit-msg file from the repository again.
+To uninstall it again, delete the .git/hooks/commit-msg file from the repositories in which you ran `install-git-hooks` and delete the `export PATH="$PATH:/xxxxxxxxxxx/git-tools/bin"` line from your `~.bashrc` and/or `~/.zshrc` file.

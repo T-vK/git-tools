@@ -2,7 +2,6 @@
 MSG_FILE=$1
 FILE_CONTENT="$(cat $MSG_FILE)"
 
-
 REGEX="^(build|ci|docs|feat|fix|perf|refactor|style|test)\(CCS-[0-9]+\): .*"
 ERROR_MSG="Commit message format must match regex \"${REGEX}\""
 

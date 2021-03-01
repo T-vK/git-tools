@@ -90,12 +90,12 @@ COMMIT_MESSAGE="${TICKET_TYPE}(${TICKET_ID}): ${COMMIT_DESCRIPTION}"
 
 read -e -p "Your commit message is '${COMMIT_MESSAGE}', would you like to make the commit now? (Y/n)" -n 1 -r
 if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-    git commit -m "${COMMIT_MESSAGE}" || echo "ERROR: Failed make commit" && exit 1
+    git commit -m "${COMMIT_MESSAGE}" || bash -c 'echo "ERROR: Failed make commit" && exit 1'
 else
     exit 1
 fi
 
 read -e -p "Would you like to push now? (y/N)" -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    git push || echo "ERROR: Failed to push" && exit 1
+    git push || bash -c 'echo "ERROR: Failed to push" && exit 1'
 fi
