@@ -11,7 +11,7 @@ fi
 
 PATH_EXTENSION="export PATH=\"\$PATH:$(pwd)/bin\""
 
-if [ -f ~/.bashrc ]; then
+if [ -f ~/.zshrc ]; then
     echo "${PATH_EXTENSION}" >> ~/.zshrc
     echo "Installed for zsh! Please open a new terminal to complete the installation..."
 else
